@@ -11,7 +11,7 @@ body {
   isolation: isolate;
 }
 
-body > :not(#ambient-particles) {
+body > :not(#ambient-particles):not(.whatsapp-float):not(.palette-panel) {
   position: relative;
   z-index: 1;
 }
@@ -166,6 +166,10 @@ body > :not(#ambient-particles) {
 }
 
 .whatsapp-float {
+  position: fixed !important;
+  right: max(18px, env(safe-area-inset-right, 0px) + 18px) !important;
+  bottom: max(18px, env(safe-area-inset-bottom, 0px) + 18px) !important;
+  z-index: 980 !important;
   box-shadow: 0 18px 34px rgba(58, 90, 61, 0.2);
 }
 
@@ -213,6 +217,11 @@ body.reduced-motion .deco-circle {
 
   .ambient-texture-layer {
     inset: -2%;
+  }
+
+  .whatsapp-float {
+    right: max(14px, env(safe-area-inset-right, 0px) + 14px) !important;
+    bottom: max(14px, env(safe-area-inset-bottom, 0px) + 14px) !important;
   }
 }
 

@@ -37,9 +37,9 @@ jobs:
           fi
 
           mkdir -p _site/assets/leila
-          cp Leila.html _site/index.html
-          cp Leila.html _site/Leila.html
-          cp Leila.html _site/404.html
+          cp index.html _site/index.html
+          cp index.html _site/Leila.html
+          cp index.html _site/404.html
           cp -R assets/leila/. _site/assets/leila/
           touch _site/.nojekyll
 
