@@ -1,0 +1,241 @@
+:root {
+  --ambient-olive: rgba(91, 123, 94, 0.14);
+  --ambient-olive-soft: rgba(91, 123, 94, 0.07);
+  --ambient-sand: rgba(168, 153, 104, 0.12);
+  --ambient-sand-soft: rgba(168, 153, 104, 0.06);
+  --ambient-line: rgba(255, 255, 255, 0.32);
+}
+
+body {
+  position: relative;
+  isolation: isolate;
+}
+
+body > :not(#ambient-particles) {
+  position: relative;
+  z-index: 1;
+}
+
+#ambient-particles {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.46;
+}
+
+.hero,
+.section,
+.cta-banner,
+.footer {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.hero > .container,
+.section > .container,
+.cta-banner > .container,
+.footer > .container {
+  position: relative;
+  z-index: 1;
+}
+
+.ambient-texture-layer {
+  --ambient-shift: 0px;
+  position: absolute;
+  inset: -4%;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.82;
+  transform: translate3d(0, var(--ambient-shift), 0) scale(1.04);
+  will-change: transform;
+}
+
+.hero .ambient-texture-layer {
+  background:
+    radial-gradient(circle at 16% 18%, var(--ambient-olive) 0, transparent 26%),
+    radial-gradient(circle at 86% 14%, var(--ambient-sand) 0, transparent 20%),
+    repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.18) 0 1px, transparent 1px 18px),
+    repeating-linear-gradient(45deg, rgba(91, 123, 94, 0.035) 0 1px, transparent 1px 24px);
+}
+
+.especialidades .ambient-texture-layer {
+  background:
+    radial-gradient(circle at 15% 20%, var(--ambient-olive-soft) 0, transparent 18%),
+    radial-gradient(circle at 86% 78%, var(--ambient-sand-soft) 0, transparent 20%),
+    radial-gradient(circle, rgba(91, 123, 94, 0.06) 1px, transparent 1.4px);
+  background-size: auto, auto, 22px 22px;
+}
+
+.sobre .ambient-texture-layer {
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.22), transparent 55%),
+    radial-gradient(circle at 84% 18%, var(--ambient-sand-soft) 0, transparent 18%),
+    repeating-linear-gradient(0deg, rgba(91, 123, 94, 0.03) 0 1px, transparent 1px 20px);
+}
+
+.beneficios .ambient-texture-layer {
+  background:
+    radial-gradient(circle at 18% 82%, var(--ambient-sand) 0, transparent 22%),
+    radial-gradient(circle at 78% 18%, var(--ambient-olive-soft) 0, transparent 20%),
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.16) 0 1px, transparent 1px 26px),
+    repeating-linear-gradient(0deg, rgba(168, 153, 104, 0.03) 0 1px, transparent 1px 26px);
+}
+
+.processo .ambient-texture-layer {
+  background:
+    radial-gradient(circle at 14% 20%, var(--ambient-olive-soft) 0, transparent 18%),
+    radial-gradient(circle at 88% 76%, rgba(91, 123, 94, 0.08) 0, transparent 18%),
+    repeating-linear-gradient(-45deg, rgba(168, 153, 104, 0.05) 0 2px, transparent 2px 18px);
+}
+
+.faq .ambient-texture-layer {
+  background:
+    radial-gradient(circle at 88% 16%, var(--ambient-sand-soft) 0, transparent 18%),
+    radial-gradient(circle at 12% 78%, rgba(91, 123, 94, 0.06) 0, transparent 18%),
+    radial-gradient(circle, rgba(168, 153, 104, 0.06) 1px, transparent 1.5px);
+  background-size: auto, auto, 24px 24px;
+}
+
+.cta-banner .ambient-texture-layer {
+  background:
+    radial-gradient(circle at 18% 24%, rgba(255, 255, 255, 0.12) 0, transparent 24%),
+    radial-gradient(circle at 82% 72%, rgba(255, 255, 255, 0.08) 0, transparent 20%),
+    repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.14) 0 1px, transparent 1px 20px);
+  opacity: 0.72;
+}
+
+.footer .ambient-texture-layer {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.24), transparent 30%),
+    radial-gradient(circle at 84% 22%, var(--ambient-sand-soft) 0, transparent 16%),
+    repeating-linear-gradient(90deg, rgba(91, 123, 94, 0.028) 0 1px, transparent 1px 22px);
+}
+
+.hero-img-wrapper img,
+.sobre-img-composition img {
+  --parallax-y: 0px;
+  transform: translate3d(0, var(--parallax-y), 0);
+  will-change: transform;
+}
+
+.deco-circle {
+  --parallax-x: 0px;
+  --parallax-y: 0px;
+  transform: translate3d(var(--parallax-x), var(--parallax-y), 0);
+  will-change: transform;
+}
+
+.hero-img-wrapper,
+.sobre-img-composition,
+.processo-visual,
+.cta-inner,
+.esp-item,
+.beneficio-card,
+.processo-step,
+.faq-item,
+.whatsapp-float,
+.btn,
+.nav-brand {
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease,
+    border-color 0.35s ease,
+    background-color 0.35s ease,
+    color 0.35s ease;
+}
+
+.esp-item,
+.beneficio-card,
+.processo-step,
+.faq-item,
+.cta-inner {
+  box-shadow: 0 10px 28px rgba(58, 90, 61, 0.04);
+}
+
+.btn-primary {
+  box-shadow: 0 14px 30px rgba(91, 123, 94, 0.18);
+}
+
+.btn-outline,
+.btn-cta {
+  box-shadow: 0 12px 24px rgba(58, 90, 61, 0.08);
+}
+
+.whatsapp-float {
+  box-shadow: 0 18px 34px rgba(58, 90, 61, 0.2);
+}
+
+.nav {
+  background:
+    linear-gradient(rgba(250, 247, 242, 0.9), rgba(250, 247, 242, 0.9)),
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.08) 0 1px, transparent 1px 18px);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .esp-item:hover,
+  .beneficio-card:hover,
+  .processo-step:hover,
+  .faq-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 34px rgba(58, 90, 61, 0.08);
+  }
+
+  .cta-inner:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 20px 38px rgba(58, 90, 61, 0.12);
+  }
+
+  .btn:hover,
+  .whatsapp-float:hover {
+    transform: translateY(-2px);
+  }
+}
+
+body.reduced-motion #ambient-particles {
+  display: none;
+}
+
+body.reduced-motion .ambient-texture-layer,
+body.reduced-motion .hero-img-wrapper img,
+body.reduced-motion .sobre-img-composition img,
+body.reduced-motion .deco-circle {
+  transform: none !important;
+}
+
+@media (max-width: 768px) {
+  #ambient-particles {
+    opacity: 0.34;
+  }
+
+  .ambient-texture-layer {
+    inset: -2%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  #ambient-particles {
+    display: none;
+  }
+
+  .hero-img-wrapper,
+  .sobre-img-composition,
+  .processo-visual,
+  .cta-inner,
+  .esp-item,
+  .beneficio-card,
+  .processo-step,
+  .faq-item,
+  .whatsapp-float,
+  .btn,
+  .nav-brand {
+    transition: none !important;
+  }
+}

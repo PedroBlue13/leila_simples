@@ -1,0 +1,294 @@
+html[data-theme="sage"] {
+  --green-900: #3A5A3D;
+  --green-700: #4A6B4D;
+  --green-600: #5B7B5E;
+  --green-500: #6B8C6E;
+  --green-300: #9CB89F;
+  --green-100: #D0E3D2;
+  --green-50: #EEF5EE;
+  --cream-900: #B8A88A;
+  --cream-600: #D4C4A8;
+  --cream-400: #E6D9C4;
+  --cream-200: #F0E8DA;
+  --cream-100: #F5F0E8;
+  --cream-50: #FAF7F2;
+  --border: #E5DDD0;
+  --border-light: #EDE7DD;
+}
+
+html[data-theme="oceano"] {
+  --green-900: #355C67;
+  --green-700: #427280;
+  --green-600: #4F8392;
+  --green-500: #6499A8;
+  --green-300: #9FC4CF;
+  --green-100: #D9ECF0;
+  --green-50: #EEF7F8;
+  --cream-900: #A58D74;
+  --cream-600: #D1BCA6;
+  --cream-400: #E2D2C2;
+  --cream-200: #F1E7DD;
+  --cream-100: #F8F2EB;
+  --cream-50: #FCFAF7;
+  --border: #DCD5CD;
+  --border-light: #EAE4DD;
+}
+
+html[data-theme="terracota"] {
+  --green-900: #75493F;
+  --green-700: #8B5A4F;
+  --green-600: #A66C5C;
+  --green-500: #BD826E;
+  --green-300: #D9A894;
+  --green-100: #F2DED6;
+  --green-50: #FBF1ED;
+  --cream-900: #B28F72;
+  --cream-600: #D9B79D;
+  --cream-400: #E9CEBA;
+  --cream-200: #F5E4D9;
+  --cream-100: #FBF1E9;
+  --cream-50: #FEFAF6;
+  --border: #E6D4C8;
+  --border-light: #F0E5DE;
+}
+
+html[data-theme="pessego"] {
+  --green-900: #5F6C4E;
+  --green-700: #728260;
+  --green-600: #84946F;
+  --green-500: #9FAD8B;
+  --green-300: #C3D0B4;
+  --green-100: #E4EBDA;
+  --green-50: #F2F6EC;
+  --cream-900: #C58A69;
+  --cream-600: #E0B296;
+  --cream-400: #EDCDBA;
+  --cream-200: #F7E4D9;
+  --cream-100: #FBEDE5;
+  --cream-50: #FEF8F3;
+  --border: #E9D7CD;
+  --border-light: #F2E7E0;
+}
+
+html[data-theme="rose"] {
+  --green-900: #6E4F63;
+  --green-700: #855F78;
+  --green-600: #9A728A;
+  --green-500: #B08AA1;
+  --green-300: #D0B4C2;
+  --green-100: #ECDDE6;
+  --green-50: #F6EEF3;
+  --cream-900: #B79C8B;
+  --cream-600: #D8C0B2;
+  --cream-400: #E9D9D0;
+  --cream-200: #F5ECE7;
+  --cream-100: #FAF4F0;
+  --cream-50: #FDF9F7;
+  --border: #E6D9D7;
+  --border-light: #F1E8E7;
+}
+
+.nav-palette-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.nav-palette-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-500);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: color var(--ease), transform var(--ease);
+}
+
+.nav-palette-trigger:hover,
+.nav-palette-trigger[aria-expanded="true"] {
+  color: var(--text-900);
+}
+
+.nav-palette-trigger svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.palette-panel {
+  position: fixed;
+  top: 84px;
+  left: 16px;
+  width: 360px;
+  max-height: 560px;
+  padding: 1.25rem;
+  background: rgba(255, 255, 255, 0.985);
+  border: 1px solid var(--border-light);
+  border-radius: 28px;
+  box-shadow: 0 26px 56px rgba(26, 26, 26, 0.16);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(10px);
+  transition: opacity 0.22s ease, transform 0.22s ease, visibility 0.22s ease;
+  z-index: 920;
+  overflow-y: auto;
+}
+
+body > .palette-panel {
+  position: fixed !important;
+  z-index: 920 !important;
+}
+
+.palette-panel.open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.palette-panel-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.9rem;
+  margin-bottom: 0.85rem;
+}
+
+.palette-panel-header .tag {
+  margin-bottom: 0.35rem;
+}
+
+.palette-panel-header h2 {
+  font-size: 1.52rem;
+  line-height: 1.1;
+}
+
+.palette-close {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--white);
+  color: var(--text-700);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background-color var(--ease), color var(--ease), transform var(--ease);
+}
+
+.palette-close:hover {
+  background: var(--green-50);
+  color: var(--green-900);
+  transform: rotate(90deg);
+}
+
+.palette-desc {
+  color: var(--text-500);
+  font-size: 0.9rem;
+  line-height: 1.7;
+  margin-bottom: 1rem;
+}
+
+.palette-grid {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.palette-option {
+  text-align: left;
+  width: 100%;
+  border: 1px solid var(--border);
+  background: var(--white);
+  border-radius: 18px;
+  padding: 0.95rem;
+  cursor: pointer;
+  transition: border-color var(--ease), box-shadow var(--ease), transform var(--ease);
+}
+
+.palette-option:hover {
+  transform: translateY(-2px);
+  border-color: var(--green-300);
+  box-shadow: 0 14px 24px rgba(58, 90, 61, 0.08);
+}
+
+.palette-option.is-active {
+  border-color: var(--green-600);
+  box-shadow: 0 0 0 2px rgba(91, 123, 94, 0.12);
+}
+
+.palette-swatches {
+  display: flex;
+  gap: 0.45rem;
+  margin-bottom: 0.75rem;
+}
+
+.palette-swatches span {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.palette-name {
+  display: block;
+  font-family: var(--font-serif);
+  font-size: 1.02rem;
+  color: var(--text-900);
+  margin-bottom: 0.25rem;
+}
+
+.palette-note {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--text-500);
+  line-height: 1.5;
+}
+
+.palette-panel-footer {
+  margin-top: 0.9rem;
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--border-light);
+  font-size: 0.8rem;
+  color: var(--text-400);
+  line-height: 1.6;
+}
+
+@media (max-width: 600px) {
+  .nav-palette-item {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .nav-palette-trigger {
+    width: min(280px, 100%);
+    justify-content: center;
+    padding: 0.85rem 1.2rem;
+    border: 1.5px solid var(--green-300);
+    border-radius: var(--radius-full);
+    background: rgba(255, 255, 255, 0.7);
+    font-size: 1rem;
+    color: var(--green-900);
+  }
+
+  .nav-palette-trigger:hover {
+    color: var(--green-900);
+  }
+
+  .palette-panel-header h2 {
+    font-size: 1.8rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .palette-panel,
+  .palette-close,
+  .palette-option,
+  .nav-palette-trigger {
+    transition: none !important;
+  }
+}

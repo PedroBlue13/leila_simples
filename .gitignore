@@ -1,0 +1,3 @@
+tmp/
+.tmp-http-server.pid
+__pycache__/

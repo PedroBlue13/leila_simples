@@ -1,0 +1,104 @@
+name: Publish Leila Page
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure GitHub Pages
+        id: pages
+        uses: actions/configure-pages@v5
+
+      - name: Prepare static files
+        env:
+          REPO_NAME: ${{ github.event.repository.name }}
+          REPO_OWNER: ${{ github.repository_owner }}
+        run: |
+          SITE_URL="https://${REPO_OWNER}.github.io"
+          if [ "$REPO_NAME" != "${REPO_OWNER}.github.io" ]; then
+            SITE_URL="${SITE_URL}/${REPO_NAME}"
+          fi
+
+          mkdir -p _site/assets/leila
+          cp Leila.html _site/index.html
+          cp Leila.html _site/Leila.html
+          cp Leila.html _site/404.html
+          cp -R assets/leila/. _site/assets/leila/
+          touch _site/.nojekyll
+
+          export SITE_URL
+          python - <<'PY'
+          import os
+          from pathlib import Path
+
+          site_url = os.environ["SITE_URL"].rstrip("/")
+          replacements = {
+              "__SITE_URL__": site_url,
+          }
+
+          for file_name in ("index.html", "Leila.html", "404.html"):
+              target = Path("_site") / file_name
+              text = target.read_text(encoding="utf-8")
+              for source, destination in replacements.items():
+                  text = text.replace(source, destination)
+              target.write_text(text, encoding="utf-8")
+          PY
+
+          cat > _site/robots.txt <<EOF
+          User-agent: *
+          Allow: /
+
+          Sitemap: ${SITE_URL}/sitemap.xml
+          EOF
+
+          cat > _site/sitemap.xml <<EOF
+          <?xml version="1.0" encoding="UTF-8"?>
+          <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+            <url>
+              <loc>${SITE_URL}/</loc>
+              <changefreq>weekly</changefreq>
+              <priority>1.0</priority>
+            </url>
+            <url>
+              <loc>${SITE_URL}/Leila.html</loc>
+              <changefreq>weekly</changefreq>
+              <priority>0.7</priority>
+            </url>
+          </urlset>
+          EOF
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: ./_site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

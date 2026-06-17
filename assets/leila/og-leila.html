@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OG Leila</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      width: 1200px;
+      height: 630px;
+      overflow: hidden;
+      font-family: "Inter", sans-serif;
+      background:
+        radial-gradient(circle at 14% 18%, rgba(91, 123, 94, 0.16) 0, transparent 22%),
+        radial-gradient(circle at 86% 84%, rgba(212, 196, 168, 0.28) 0, transparent 24%),
+        repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.18) 0 1px, transparent 1px 24px),
+        linear-gradient(135deg, #f8f3eb, #faf7f2 55%, #f0e8da);
+      color: #1a1a1a;
+    }
+
+    .frame {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      padding: 58px 64px;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 46px;
+      align-items: center;
+    }
+
+    .tag {
+      display: inline-block;
+      margin-bottom: 18px;
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #5b7b5e;
+    }
+
+    h1 {
+      font-family: "Playfair Display", serif;
+      font-size: 78px;
+      line-height: 0.98;
+      margin-bottom: 8px;
+      max-width: 580px;
+    }
+
+    .subtitle {
+      font-family: "Playfair Display", serif;
+      font-size: 54px;
+      line-height: 1.02;
+      margin-bottom: 22px;
+      color: #233023;
+      max-width: 540px;
+    }
+
+    p {
+      max-width: 520px;
+      color: #4f4f4f;
+      font-size: 25px;
+      line-height: 1.45;
+      margin-bottom: 32px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-family: "Playfair Display", serif;
+      font-size: 30px;
+      font-weight: 600;
+      color: #243124;
+    }
+
+    .brand-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      border: 2px solid #5b7b5e;
+      display: grid;
+      place-items: center;
+      background: rgba(238, 245, 238, 0.9);
+    }
+
+    .details {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      color: #5b7b5e;
+      font-size: 19px;
+      font-weight: 600;
+    }
+
+    .details span {
+      padding: 10px 16px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid rgba(91, 123, 94, 0.16);
+    }
+
+    .photo-wrap {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      min-height: 470px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+    }
+
+    .photo-card {
+      position: relative;
+      width: 430px;
+      height: 500px;
+      border-radius: 42px;
+      overflow: hidden;
+      background: #eef5ee;
+      box-shadow: 0 20px 50px rgba(58, 90, 61, 0.16);
+    }
+
+    .photo-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 36%;
+    }
+
+    .circle {
+      position: absolute;
+      border-radius: 50%;
+      background: repeating-linear-gradient(-45deg, rgba(91, 123, 94, 0.58), rgba(91, 123, 94, 0.58) 4px, transparent 4px, transparent 10px);
+      opacity: 0.6;
+    }
+
+    .circle.a {
+      width: 130px;
+      height: 130px;
+      top: 16px;
+      right: 0;
+    }
+
+    .circle.b {
+      width: 92px;
+      height: 92px;
+      bottom: 24px;
+      left: 18px;
+      background: repeating-linear-gradient(-45deg, rgba(168, 153, 104, 0.62), rgba(168, 153, 104, 0.62) 4px, transparent 4px, transparent 10px);
+    }
+  </style>
+</head>
+<body>
+  <div class="frame">
+    <div>
+      <span class="tag">Neuropsicopedagogia infantil</span>
+      <h1>Dra. Leila</h1>
+      <div class="subtitle">neuropsicopedagoga</div>
+      <p>Avaliação, intervenção e apoio à aprendizagem com acolhimento para crianças, famílias e escola.</p>
+      <div class="details">
+        <span>Dificuldades de aprendizagem</span>
+        <span>Atenção e organização</span>
+        <span>Parceria com a escola</span>
+      </div>
+    </div>
+    <div class="photo-wrap">
+      <div class="photo-card">
+        <img src="hero-leila.png" alt="">
+      </div>
+      <div class="circle a"></div>
+      <div class="circle b"></div>
+    </div>
+    <div class="brand" style="position:absolute;left:64px;bottom:52px;">
+      <div class="brand-icon">
+        <svg width="26" height="26" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="14" cy="14" r="13" stroke="#5B7B5E" stroke-width="1.2" fill="none"></circle>
+          <path d="M14 22 C13.8 19 14.2 16.5 14 14.5 C13.7 12 14 9 14 6" stroke="#5B7B5E" stroke-width="1" stroke-linecap="round" fill="none"></path>
+          <path d="M14 16 C12 14.5 10.5 14 9.8 12.5 C9 11 9.8 9.8 10.8 10.3 C12 11 13.5 13 14 15Z" fill="#5B7B5E" opacity="0.7"></path>
+          <path d="M14 12.5 C12.2 10.5 10.8 9.5 10.2 8 C9.5 6.5 10.5 5.5 11.5 6.2 C12.8 7 13.8 9 14 11.5Z" fill="#5B7B5E" opacity="0.5"></path>
+          <path d="M14 15 C16 13.5 17.5 13 18.2 11.5 C19 10 18.2 8.8 17.2 9.3 C16 10 14.5 12 14 14Z" fill="#5B7B5E" opacity="0.7"></path>
+          <path d="M14 11 C15.8 9 17.2 8 17.8 6.5 C18.5 5 17.5 4 16.5 4.7 C15.2 5.5 14.2 7.5 14 10Z" fill="#5B7B5E" opacity="0.5"></path>
+        </svg>
+      </div>
+      Dra. Leila
+    </div>
+  </div>
+</body>
+</html>
