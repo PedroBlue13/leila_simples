@@ -809,10 +809,27 @@ h3 {
 }
 
 .neurodivergencia-pilar {
+  --pilar-color: var(--green-100);
   display: grid;
   grid-template-columns: 44px 1fr;
   gap: var(--s4);
   align-items: flex-start;
+}
+
+.neurodivergencia-pilar:nth-child(1) {
+  --pilar-color: #2F6FB0;
+}
+
+.neurodivergencia-pilar:nth-child(2) {
+  --pilar-color: #4F9D69;
+}
+
+.neurodivergencia-pilar:nth-child(3) {
+  --pilar-color: #F2C94C;
+}
+
+.neurodivergencia-pilar:nth-child(4) {
+  --pilar-color: #D95D5D;
 }
 
 .neurodivergencia-pilar > span {
@@ -823,7 +840,7 @@ h3 {
   justify-content: center;
   color: var(--green-900);
   background: var(--white);
-  border: 1px solid var(--green-100);
+  border: 2px solid var(--pilar-color);
   border-radius: 50%;
   font-family: var(--font-serif);
   font-size: 0.76rem;

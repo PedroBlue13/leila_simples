@@ -41,6 +41,7 @@
   <link rel="stylesheet" href="assets/leila/leila-reference.css">
   <link rel="stylesheet" href="assets/leila/leila-motion.css">
   <link rel="stylesheet" href="assets/leila/leila-themes.css">
+  <link rel="stylesheet" href="assets/leila/leila-opening.css">
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -92,6 +93,55 @@
   </style>
 </head>
 <body>
+  <section class="leila-opening" id="leila-opening" role="dialog" aria-modal="true" aria-labelledby="leila-opening-title">
+    <div class="leila-opening__blur" aria-hidden="true"></div>
+    <div class="leila-opening__shade" aria-hidden="true"></div>
+
+    <div class="leila-opening__glasses" aria-hidden="true">
+      <img
+        class="leila-opening__glasses-poster"
+        src="assets/leila/glasses-3d-poster.png"
+        alt=""
+        width="1304"
+        height="902"
+      >
+      <iframe
+        class="leila-opening__glasses-frame"
+        title="Óculos 3D interativos que acompanham o movimento do cursor"
+        src="assets/leila/glasses-3d/index.html"
+        tabindex="-1"
+        allow="autoplay"
+        aria-hidden="true"
+      ></iframe>
+    </div>
+
+    <button class="leila-opening__skip" type="button" data-opening-skip aria-label="Pular introdução e acessar o site">
+      Pular introdução
+      <span aria-hidden="true">→</span>
+    </button>
+
+    <div class="leila-opening__content" aria-live="polite">
+      <div class="leila-opening__message leila-opening__message--first">
+        <p class="leila-opening__eyebrow">Para mães, pais e responsáveis</p>
+        <h1 id="leila-opening-title">Quando tentamos compreender tudo sozinhos, o caminho pode parecer confuso.</h1>
+        <button class="leila-opening__enter" type="button" data-opening-reveal>
+          <span>Conhecer quem pode caminhar conosco</span>
+          <span aria-hidden="true">→</span>
+        </button>
+      </div>
+      <!-- <div class="leila-opening__message leila-opening__message--together" aria-hidden="true">
+        <p class="leila-opening__eyebrow">Com acolhimento e orientação</p>
+        <p class="leila-opening__together-text">Juntos, podemos tornar o caminho mais claro e valorizar o jeito único de cada criança perceber, aprender e se comunicar.</p>
+      </div> -->
+    </div>
+  </section>
+
+  <noscript>
+    <style>
+      .leila-opening { display: none !important; }
+    </style>
+  </noscript>
+
   <canvas id="ambient-particles" aria-hidden="true"></canvas>
 
   <header class="nav" id="nav">
@@ -293,6 +343,13 @@
               <div>
                 <h3>Família e escola como parceiras</h3>
                 <p>Orientações práticas aproximam os adultos e tornam a rotina mais previsível, acolhedora e favorável à autonomia.</p>
+              </div>
+            </div>
+            <div class="neurodivergencia-pilar">
+              <span aria-hidden="true">04</span>
+              <div>
+                <h3>Potencialidades em primeiro plano</h3>
+                <p>O acompanhamento valoriza habilidades, interesses e conquistas para fortalecer a autoestima e ampliar possibilidades de desenvolvimento.</p>
               </div>
             </div>
           </div>
@@ -573,6 +630,14 @@
   <script src="assets/leila/anime.min.js"></script>
   <script src="assets/leila/leila-motion.js"></script>
   <script src="assets/leila/leila-themes.js"></script>
-  <script type="module" src="assets/leila/leila-spline-cube.js"></script>
+  <script src="assets/leila/leila-opening.js"></script>
+  <script>
+    if (window.location.protocol !== 'file:') {
+      var splineCubeScript = document.createElement('script');
+      splineCubeScript.type = 'module';
+      splineCubeScript.src = 'assets/leila/leila-spline-cube.js';
+      document.body.appendChild(splineCubeScript);
+    }
+  </script>
 </body>
 </html>

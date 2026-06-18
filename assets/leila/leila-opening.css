@@ -1,0 +1,422 @@
+body.opening-active {
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
+body.opening-active > :not(.leila-opening):not(noscript) {
+  transition: filter 2.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+body.opening-active.opening-clearing > :not(.leila-opening):not(noscript) {
+  filter: blur(0) saturate(1);
+}
+
+body > .leila-opening {
+  --lens-left-x: 30%;
+  --lens-right-x: 70%;
+  --lens-center-y: 67%;
+  --lens-radius-x: 13%;
+  --lens-radius-y: 16%;
+  --glasses-shift-x: 0px;
+  --glasses-shift-y: 0px;
+  position: fixed !important;
+  inset: 0;
+  z-index: 5000 !important;
+  min-height: 100dvh;
+  overflow: hidden;
+  color: #fff;
+  background: transparent;
+  isolation: isolate;
+  opacity: 1;
+  visibility: visible;
+  transition:
+    opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+    visibility 0.8s step-end;
+}
+
+.leila-opening.is-leaving {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.leila-opening__blur,
+.leila-opening__shade {
+  position: absolute;
+  pointer-events: none;
+}
+
+.leila-opening__blur {
+  inset: 0;
+  z-index: 0;
+  background: rgba(31, 55, 48, 0.12);
+  -webkit-backdrop-filter: blur(14px) saturate(0.76);
+  backdrop-filter: blur(14px) saturate(0.76);
+  transition: opacity 2.5s ease;
+}
+
+.leila-opening__shade {
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(180deg, rgba(18, 43, 37, 0.62) 0%, rgba(18, 43, 37, 0.24) 36%, rgba(18, 43, 37, 0.12) 100%),
+    radial-gradient(circle at 50% 56%, transparent 25%, rgba(10, 28, 23, 0.18) 100%);
+  transition: opacity 2.5s ease;
+}
+
+.leila-opening__blur,
+.leila-opening__shade {
+  -webkit-mask-image:
+    linear-gradient(#000 0 0),
+    radial-gradient(
+      ellipse var(--lens-radius-x) var(--lens-radius-y)
+      at var(--lens-left-x) var(--lens-center-y),
+      #000 97%,
+      transparent 100%
+    ),
+    radial-gradient(
+      ellipse var(--lens-radius-x) var(--lens-radius-y)
+      at var(--lens-right-x) var(--lens-center-y),
+      #000 97%,
+      transparent 100%
+    );
+  -webkit-mask-composite: xor;
+  mask-image:
+    linear-gradient(#000 0 0),
+    radial-gradient(
+      ellipse var(--lens-radius-x) var(--lens-radius-y)
+      at var(--lens-left-x) var(--lens-center-y),
+      #000 97%,
+      transparent 100%
+    ),
+    radial-gradient(
+      ellipse var(--lens-radius-x) var(--lens-radius-y)
+      at var(--lens-right-x) var(--lens-center-y),
+      #000 97%,
+      transparent 100%
+    );
+  mask-composite: exclude;
+}
+
+.leila-opening__glasses {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  opacity: 1;
+  pointer-events: auto;
+  transform: scale(1);
+  transition:
+    opacity 2.1s 0.35s ease,
+    transform 2.3s 0.2s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 2.1s ease;
+}
+
+.leila-opening__glasses-poster,
+.leila-opening__glasses-frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.leila-opening__glasses-poster {
+  object-fit: contain;
+  pointer-events: none;
+  opacity: 1;
+  transform: translate3d(var(--glasses-shift-x), var(--glasses-shift-y), 0);
+  transition: opacity 0.55s ease;
+  will-change: transform;
+}
+
+.leila-opening__glasses-frame {
+  display: block;
+  border: 0;
+  background: transparent;
+  opacity: 0;
+  transition: opacity 0.55s ease;
+}
+
+.leila-opening.is-scene-ready .leila-opening__glasses-poster {
+  opacity: 0;
+}
+
+.leila-opening.is-scene-ready .leila-opening__glasses-frame {
+  opacity: 1;
+}
+
+.leila-opening__content {
+  position: relative;
+  z-index: 3;
+  width: min(820px, calc(100% - 48px));
+  margin-inline: auto;
+  padding-top: clamp(72px, 10vh, 108px);
+  text-align: center;
+  text-wrap: balance;
+  pointer-events: none;
+}
+
+.leila-opening__message {
+  position: absolute;
+  top: clamp(72px, 10vh, 108px);
+  left: 50%;
+  width: 100%;
+  transform: translateX(-50%);
+}
+
+.leila-opening__message--first {
+  animation: opening-copy-in 0.78s 0.12s backwards cubic-bezier(0.22, 1, 0.36, 1);
+  transition:
+    opacity 0.42s ease,
+    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.42s ease;
+}
+
+.leila-opening__message--together {
+  width: min(780px, calc(100vw - 40px));
+  padding: 24px 30px 28px;
+  background: rgba(23, 55, 46, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.17);
+  border-radius: 28px;
+  box-shadow: 0 18px 48px rgba(8, 25, 20, 0.2);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  opacity: 0;
+  transform: translate(-50%, 18px);
+  filter: blur(5px);
+  pointer-events: none;
+  transition:
+    opacity 0.72s 0.22s ease,
+    transform 0.8s 0.18s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.72s 0.22s ease;
+}
+
+.leila-opening__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin: 0 0 15px;
+  color: #e5eee7;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.17em;
+  line-height: 1.2;
+  text-transform: uppercase;
+  text-shadow: 0 2px 14px rgba(6, 20, 16, 0.5);
+}
+
+.leila-opening__eyebrow::before,
+.leila-opening__eyebrow::after {
+  width: 24px;
+  height: 1px;
+  content: "";
+  background: currentColor;
+  opacity: 0.62;
+}
+
+.leila-opening__content h1,
+.leila-opening__together-text {
+  max-width: 800px;
+  margin: 0 auto;
+  color: #fff;
+  font-family: var(--font-serif, "Playfair Display", Georgia, serif);
+  font-size: clamp(2.35rem, 4.7vw, 4.5rem);
+  font-weight: 600;
+  letter-spacing: -0.042em;
+  line-height: 1.02;
+  text-shadow: 0 7px 30px rgba(5, 22, 17, 0.42);
+}
+
+.leila-opening__together-text {
+  max-width: 760px;
+}
+
+.leila-opening__enter,
+.leila-opening__skip {
+  font: inherit;
+  cursor: pointer;
+}
+
+.leila-opening__enter {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  min-height: 54px;
+  margin-top: 25px;
+  padding: 0 26px;
+  color: #183d34;
+  font-size: 0.88rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  background: rgba(250, 247, 239, 0.94);
+  border: 1px solid rgba(255, 255, 255, 0.78);
+  border-radius: 999px;
+  box-shadow:
+    0 13px 34px rgba(3, 18, 14, 0.25),
+    0 0 0 4px rgba(91, 123, 94, 0.38);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  transition:
+    gap 0.25s ease,
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+  pointer-events: auto;
+}
+
+.leila-opening__enter:hover {
+  gap: 24px;
+  transform: translateY(-2px);
+  box-shadow:
+    0 18px 42px rgba(3, 18, 14, 0.3),
+    0 0 0 4px rgba(91, 123, 94, 0.5);
+}
+
+.leila-opening__enter:focus-visible,
+.leila-opening__skip:focus-visible {
+  outline: 3px solid #f2c94c;
+  outline-offset: 4px;
+}
+
+.leila-opening__skip {
+  position: absolute;
+  z-index: 4;
+  top: max(20px, env(safe-area-inset-top));
+  right: max(22px, env(safe-area-inset-right));
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 10px 14px;
+  color: rgba(255, 255, 255, 0.84);
+  font-size: 0.76rem;
+  font-weight: 500;
+  background: rgba(18, 43, 37, 0.42);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 999px;
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  transition:
+    opacity 0.3s ease,
+    color 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.leila-opening__skip:hover {
+  color: #fff;
+  background: rgba(18, 43, 37, 0.62);
+}
+
+.leila-opening.is-revealing .leila-opening__message--first {
+  opacity: 0;
+  transform: translate(-50%, -14px);
+  filter: blur(5px);
+  pointer-events: none;
+}
+
+.leila-opening.is-together .leila-opening__message--together {
+  opacity: 1;
+  transform: translate(-50%, 0);
+  filter: blur(0);
+}
+
+.leila-opening.is-together .leila-opening__glasses {
+  opacity: 0;
+  transform: scale(1.035);
+  filter: blur(2px);
+  pointer-events: none;
+}
+
+.leila-opening.is-together .leila-opening__blur {
+  opacity: 0;
+}
+
+.leila-opening.is-together .leila-opening__shade {
+  opacity: 0;
+}
+
+.leila-opening.is-together .leila-opening__skip {
+  opacity: 0;
+  pointer-events: none;
+}
+
+@keyframes opening-copy-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 18px);
+    filter: blur(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+    filter: blur(0);
+  }
+}
+
+@media (max-width: 700px) {
+  .leila-opening__blur {
+    background: rgba(31, 55, 48, 0.22);
+    -webkit-backdrop-filter: blur(11px) saturate(0.78);
+    backdrop-filter: blur(11px) saturate(0.78);
+  }
+
+  .leila-opening__content {
+    width: min(100% - 32px, 570px);
+  }
+
+  .leila-opening__message {
+    top: max(84px, calc(env(safe-area-inset-top) + 66px));
+  }
+
+  .leila-opening__content h1,
+  .leila-opening__together-text {
+    font-size: clamp(2rem, 9.6vw, 3.2rem);
+    line-height: 1.03;
+  }
+
+  .leila-opening__enter {
+    min-height: 50px;
+    max-width: calc(100vw - 48px);
+    margin-top: 22px;
+    padding: 0 21px;
+    font-size: 0.83rem;
+  }
+
+  .leila-opening__skip {
+    top: max(13px, env(safe-area-inset-top));
+    right: max(13px, env(safe-area-inset-right));
+  }
+
+  .leila-opening__message--together {
+    padding: 21px 18px 24px;
+    border-radius: 22px;
+  }
+}
+
+@media (max-width: 420px) {
+  .leila-opening__eyebrow {
+    font-size: 0.63rem;
+  }
+
+  .leila-opening__eyebrow::before,
+  .leila-opening__eyebrow::after {
+    width: 15px;
+  }
+
+  .leila-opening__content h1,
+  .leila-opening__together-text {
+    font-size: clamp(1.86rem, 9.2vw, 2.55rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body > .leila-opening,
+  .leila-opening__blur,
+  .leila-opening__shade,
+  .leila-opening__glasses,
+  .leila-opening__message,
+  .leila-opening__enter,
+  .leila-opening__skip {
+    animation: none !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+  }
+}

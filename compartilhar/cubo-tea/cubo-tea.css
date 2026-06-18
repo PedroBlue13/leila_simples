@@ -1,0 +1,187 @@
+.tea-cube-widget {
+  --tea-blue: #2f6fb0;
+  --tea-green: #4f9d69;
+  --tea-yellow: #f2c94c;
+  --tea-red: #d95d5d;
+  position: relative;
+  width: 100%;
+  min-height: 420px;
+  overflow: hidden;
+  background: transparent;
+}
+
+.tea-cube-widget::before {
+  content: "";
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  z-index: 3;
+  width: 11px;
+  height: 11px;
+  background: var(--tea-blue);
+  border-radius: 50%;
+  box-shadow:
+    19px 0 0 var(--tea-green),
+    38px 0 0 var(--tea-yellow),
+    57px 0 0 var(--tea-red);
+  pointer-events: none;
+}
+
+.tea-cube-widget__canvas {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 420px;
+  display: block;
+  opacity: 0;
+  outline: none;
+  touch-action: none;
+  transition: opacity 0.3s ease;
+}
+
+.tea-cube-widget__fallback {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 800px;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.tea-cube-widget__css-cube {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  transform-style: preserve-3d;
+  animation: tea-cube-widget-spin 12s linear infinite;
+}
+
+.tea-cube-widget__face {
+  --face-color: var(--tea-blue);
+  position: absolute;
+  inset: 0;
+  border: 2px solid rgba(27, 33, 37, 0.82);
+  border-radius: 8px;
+  background-color: var(--face-color);
+  background-image:
+    linear-gradient(to right,
+      transparent calc(33.333% - 2px),
+      rgba(27, 33, 37, 0.82) calc(33.333% - 2px),
+      rgba(27, 33, 37, 0.82) calc(33.333% + 2px),
+      transparent calc(33.333% + 2px),
+      transparent calc(66.666% - 2px),
+      rgba(27, 33, 37, 0.82) calc(66.666% - 2px),
+      rgba(27, 33, 37, 0.82) calc(66.666% + 2px),
+      transparent calc(66.666% + 2px)),
+    linear-gradient(to bottom,
+      transparent calc(33.333% - 2px),
+      rgba(27, 33, 37, 0.82) calc(33.333% - 2px),
+      rgba(27, 33, 37, 0.82) calc(33.333% + 2px),
+      transparent calc(33.333% + 2px),
+      transparent calc(66.666% - 2px),
+      rgba(27, 33, 37, 0.82) calc(66.666% - 2px),
+      rgba(27, 33, 37, 0.82) calc(66.666% + 2px),
+      transparent calc(66.666% + 2px));
+  box-shadow: inset 0 0 22px rgba(255, 255, 255, 0.14);
+}
+
+.tea-cube-widget__front {
+  --face-color: var(--tea-blue);
+  transform: translateZ(75px);
+}
+
+.tea-cube-widget__back {
+  --face-color: var(--tea-red);
+  transform: rotateY(180deg) translateZ(75px);
+}
+
+.tea-cube-widget__right {
+  --face-color: var(--tea-green);
+  transform: rotateY(90deg) translateZ(75px);
+}
+
+.tea-cube-widget__left {
+  --face-color: var(--tea-yellow);
+  transform: rotateY(-90deg) translateZ(75px);
+}
+
+.tea-cube-widget__top {
+  --face-color: var(--tea-yellow);
+  transform: rotateX(90deg) translateZ(75px);
+}
+
+.tea-cube-widget__bottom {
+  --face-color: var(--tea-red);
+  transform: rotateX(-90deg) translateZ(75px);
+}
+
+.tea-cube-widget__status {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  color: #68726c;
+  font-size: 0.8rem;
+  text-align: center;
+  pointer-events: none;
+}
+
+.tea-cube-widget.is-loading .tea-cube-widget__status {
+  display: flex;
+}
+
+.tea-cube-widget.is-loaded .tea-cube-widget__canvas {
+  opacity: 1;
+}
+
+.tea-cube-widget.is-loaded .tea-cube-widget__fallback {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+@keyframes tea-cube-widget-spin {
+  0% {
+    transform: rotateX(-18deg) rotateY(30deg);
+  }
+  50% {
+    transform: rotateX(18deg) rotateY(210deg);
+  }
+  100% {
+    transform: rotateX(-18deg) rotateY(390deg);
+  }
+}
+
+@media (max-width: 600px) {
+  .tea-cube-widget {
+    min-height: 340px;
+  }
+
+  .tea-cube-widget__canvas {
+    height: 340px;
+  }
+
+  .tea-cube-widget__css-cube {
+    width: 126px;
+    height: 126px;
+  }
+
+  .tea-cube-widget__front { transform: translateZ(63px); }
+  .tea-cube-widget__back { transform: rotateY(180deg) translateZ(63px); }
+  .tea-cube-widget__right { transform: rotateY(90deg) translateZ(63px); }
+  .tea-cube-widget__left { transform: rotateY(-90deg) translateZ(63px); }
+  .tea-cube-widget__top { transform: rotateX(90deg) translateZ(63px); }
+  .tea-cube-widget__bottom { transform: rotateX(-90deg) translateZ(63px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tea-cube-widget__css-cube {
+    animation: none;
+    transform: rotateX(-18deg) rotateY(30deg);
+  }
+}
