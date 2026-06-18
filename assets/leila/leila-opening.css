@@ -151,14 +151,6 @@ body > .leila-opening {
   transform: translateX(-50%);
 }
 
-.leila-opening__message--first {
-  animation: opening-copy-in 0.78s 0.12s backwards cubic-bezier(0.22, 1, 0.36, 1);
-  transition:
-    opacity 0.42s ease,
-    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
-    filter 0.42s ease;
-}
-
 .leila-opening__message--glasses {
   opacity: 0;
   transform: translate(-50%, 18px);
@@ -239,6 +231,7 @@ body > .leila-opening {
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
   transition:
+    opacity 0.5s ease,
     gap 0.25s ease,
     transform 0.25s ease,
     box-shadow 0.25s ease;
@@ -291,17 +284,22 @@ body > .leila-opening {
   background: rgba(18, 43, 37, 0.62);
 }
 
-.leila-opening.is-glasses-visible .leila-opening__message--first {
-  opacity: 0;
-  transform: translate(-50%, -14px);
-  filter: blur(5px);
-  pointer-events: none;
-}
-
-.leila-opening.is-glasses-visible .leila-opening__message--glasses {
+.leila-opening.is-message-visible .leila-opening__message--glasses {
   opacity: 1;
   transform: translate(-50%, 0);
   filter: blur(0);
+  pointer-events: auto;
+}
+
+.leila-opening__enter {
+  opacity: 0;
+  transform: translateY(8px);
+  pointer-events: none;
+}
+
+.leila-opening.is-glasses-visible .leila-opening__enter {
+  opacity: 1;
+  transform: translateY(0);
   pointer-events: auto;
 }
 
@@ -330,19 +328,6 @@ body > .leila-opening {
 .leila-opening.is-revealing .leila-opening__skip {
   opacity: 0;
   pointer-events: none;
-}
-
-@keyframes opening-copy-in {
-  from {
-    opacity: 0;
-    transform: translate(-50%, 18px);
-    filter: blur(5px);
-  }
-  to {
-    opacity: 1;
-    transform: translate(-50%, 0);
-    filter: blur(0);
-  }
 }
 
 @media (max-width: 700px) {

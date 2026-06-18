@@ -8,12 +8,12 @@
   const revealButton = opening.querySelector('[data-opening-reveal]');
   const skipButton = opening.querySelector('[data-opening-skip]');
   const glassesPoster = opening.querySelector('.leila-opening__glasses-poster');
-  const firstMessage = opening.querySelector('.leila-opening__message--first');
   const glassesMessage = opening.querySelector('.leila-opening__message--glasses');
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const focusableSelector = 'button:not([disabled])';
-  const minimumFirstMessageTime = reducedMotion ? 9200 : 3800;
-  const glassesLoadDelay = reducedMotion ? 0 : 450;
+  const messageRevealDelay = reducedMotion ? 0 : 100;
+  const glassesRevealDelay = reducedMotion ? 0 : 2600;
+  const glassesLoadDelay = 0;
   const openingStartedAt = performance.now();
 
   let isLoadingScene = false;
@@ -22,6 +22,7 @@
   let currentLens = null;
   let targetLens = null;
   let lensAnimationFrame = 0;
+  let messageTimer = 0;
   let showTimer = 0;
 
   document.body.classList.add('opening-active');
@@ -138,6 +139,18 @@
   targetLens = { ...currentLens };
   writeLensStyles();
 
+  function showMessage() {
+    if (isClosing) {
+      return;
+    }
+
+    opening.classList.add('is-message-visible');
+
+    if (glassesMessage) {
+      glassesMessage.setAttribute('aria-hidden', 'false');
+    }
+  }
+
   function showGlasses() {
     if (isGlassesVisible || isClosing) {
       return;
@@ -146,14 +159,6 @@
     isGlassesVisible = true;
     opening.classList.add('is-glasses-visible');
 
-    if (firstMessage) {
-      firstMessage.setAttribute('aria-hidden', 'true');
-    }
-
-    if (glassesMessage) {
-      glassesMessage.setAttribute('aria-hidden', 'false');
-    }
-
     if (revealButton) {
       revealButton.disabled = false;
     }
@@ -161,7 +166,7 @@
 
   function queueGlassesReveal() {
     const elapsed = performance.now() - openingStartedAt;
-    const remainingTime = Math.max(0, minimumFirstMessageTime - elapsed);
+    const remainingTime = Math.max(0, glassesRevealDelay - elapsed);
 
     window.clearTimeout(showTimer);
     showTimer = window.setTimeout(showGlasses, remainingTime);
@@ -207,9 +212,11 @@
     writeLensStyles();
   });
 
+  messageTimer = window.setTimeout(showMessage, messageRevealDelay);
   window.setTimeout(startGlassesLoad, glassesLoadDelay);
 
   function removeOpening() {
+    window.clearTimeout(messageTimer);
     window.clearTimeout(showTimer);
     window.cancelAnimationFrame(lensAnimationFrame);
     opening.remove();
