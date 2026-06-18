@@ -619,5 +619,38 @@
   <script src="assets/leila/leila-motion.js"></script>
   <script src="assets/leila/leila-themes.js"></script>
   <script src="assets/leila/leila-opening.js"></script>
+  <script>
+    (function () {
+      var cubeModuleLoaded = false;
+
+      function loadCubeModule() {
+        if (cubeModuleLoaded || window.location.protocol === 'file:') {
+          return;
+        }
+
+        cubeModuleLoaded = true;
+
+        var splineCubeScript = document.createElement('script');
+        splineCubeScript.type = 'module';
+        splineCubeScript.src = 'assets/leila/leila-spline-cube.js';
+        document.body.appendChild(splineCubeScript);
+      }
+
+      function scheduleCubeModule() {
+        if ('requestIdleCallback' in window) {
+          window.requestIdleCallback(loadCubeModule, { timeout: 1800 });
+          return;
+        }
+
+        window.setTimeout(loadCubeModule, 600);
+      }
+
+      if (document.getElementById('leila-opening')) {
+        document.addEventListener('leila:openingcomplete', scheduleCubeModule, { once: true });
+      } else {
+        scheduleCubeModule();
+      }
+    }());
+  </script>
 </body>
 </html>
