@@ -107,7 +107,8 @@ html[data-theme="aurora"],
 html[data-theme="outono"],
 html[data-theme="neblina"],
 html[data-theme="baunilha"],
-html[data-theme="hibisco"] {
+html[data-theme="hibisco"],
+html[data-theme="tea"] {
   --green-900: color-mix(in srgb, var(--palette-primary) 62%, #162018);
   --green-700: color-mix(in srgb, var(--palette-primary) 82%, #26342B);
   --green-600: var(--palette-primary);
@@ -243,6 +244,12 @@ html[data-theme="hibisco"] {
   --palette-primary: #9A5273;
   --palette-accent: #D8B5B9;
   --palette-surface: #FDF8FB;
+}
+
+html[data-theme="tea"] {
+  --palette-primary: #2F6FB0;
+  --palette-accent: #F2C94C;
+  --palette-surface: #F7FBFF;
 }
 
 [stroke="#5B7B5E"] {

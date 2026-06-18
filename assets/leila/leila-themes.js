@@ -149,6 +149,13 @@
       swatches: ['#67364D', '#D8B5B9', '#FDF8FB'],
       name: 'Hibisco Gentil',
       note: 'Expressiva e feminina, preservando equilíbrio e confiança.'
+    },
+    {
+      id: 'tea',
+      color: '#2F6FB0',
+      swatches: ['#2F6FB0', '#F2C94C', '#D95D5D', '#4F9D69'],
+      name: 'Neurodiversidade TEA',
+      note: 'Azul, amarelo, vermelho e verde em uma composição inclusiva e acolhedora.'
     }
   ];
 
