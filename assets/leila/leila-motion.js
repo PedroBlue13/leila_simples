@@ -197,11 +197,8 @@
       return;
     }
 
-    const palette = [
-      'rgba(91, 123, 94, 0.34)',
-      'rgba(168, 153, 104, 0.28)',
-      'rgba(255, 255, 255, 0.26)'
-    ];
+    let palette = [];
+    let linkColor = '91, 123, 94';
 
     let width = 0;
     let height = 0;
@@ -211,7 +208,39 @@
     let scrollVelocity = 0;
     let particles = [];
 
+    function hexToRgb(value) {
+      const hex = value.trim().replace('#', '');
+
+      if (!/^[0-9a-f]{6}$/i.test(hex)) {
+        return null;
+      }
+
+      return [
+        parseInt(hex.slice(0, 2), 16),
+        parseInt(hex.slice(2, 4), 16),
+        parseInt(hex.slice(4, 6), 16)
+      ];
+    }
+
+    function rgba(rgb, alpha) {
+      return `rgba(${rgb.join(', ')}, ${alpha})`;
+    }
+
+    function refreshPalette() {
+      const styles = getComputedStyle(document.documentElement);
+      const primary = hexToRgb(styles.getPropertyValue('--green-600')) || [91, 123, 94];
+      const accent = hexToRgb(styles.getPropertyValue('--cream-900')) || [168, 153, 104];
+
+      linkColor = primary.join(', ');
+      palette = [
+        rgba(primary, 0.34),
+        rgba(accent, 0.28),
+        'rgba(255, 255, 255, 0.26)'
+      ];
+    }
+
     function buildParticles() {
+      refreshPalette();
       const total = width < 640 ? 16 : width < 1024 ? 22 : 30;
       particles = Array.from({ length: total }, () => ({
         x: Math.random() * width,
@@ -241,7 +270,7 @@
       }
 
       const opacity = ((maxDistance - distance) / maxDistance) * 0.16;
-      context.strokeStyle = 'rgba(91, 123, 94, ' + opacity.toFixed(3) + ')';
+      context.strokeStyle = `rgba(${linkColor}, ${opacity.toFixed(3)})`;
       context.lineWidth = 0.8;
       context.beginPath();
       context.moveTo(source.x, source.y);
@@ -283,6 +312,7 @@
     tick();
 
     window.addEventListener('resize', resizeCanvas);
+    document.addEventListener('leila:themechange', buildParticles);
     window.addEventListener('scroll', () => {
       const currentScrollY = window.scrollY;
       scrollVelocity = Math.max(-12, Math.min(12, currentScrollY - lastScrollY));

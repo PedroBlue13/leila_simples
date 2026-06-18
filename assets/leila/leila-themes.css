@@ -88,6 +88,176 @@ html[data-theme="rose"] {
   --border-light: #F1E8E7;
 }
 
+html[data-theme="lavanda"],
+html[data-theme="ceu"],
+html[data-theme="menta"],
+html[data-theme="eucalipto"],
+html[data-theme="oliva"],
+html[data-theme="camomila"],
+html[data-theme="areia"],
+html[data-theme="cacau"],
+html[data-theme="ameixa"],
+html[data-theme="cereja"],
+html[data-theme="coral"],
+html[data-theme="azul"],
+html[data-theme="lilas"],
+html[data-theme="petroleo"],
+html[data-theme="esmeralda"],
+html[data-theme="aurora"],
+html[data-theme="outono"],
+html[data-theme="neblina"],
+html[data-theme="baunilha"],
+html[data-theme="hibisco"] {
+  --green-900: color-mix(in srgb, var(--palette-primary) 62%, #162018);
+  --green-700: color-mix(in srgb, var(--palette-primary) 82%, #26342B);
+  --green-600: var(--palette-primary);
+  --green-500: color-mix(in srgb, var(--palette-primary) 82%, #FFFFFF);
+  --green-300: color-mix(in srgb, var(--palette-primary) 55%, #FFFFFF);
+  --green-100: color-mix(in srgb, var(--palette-primary) 22%, #FFFFFF);
+  --green-50: color-mix(in srgb, var(--palette-primary) 8%, var(--palette-surface));
+  --cream-900: color-mix(in srgb, var(--palette-accent) 68%, #65513D);
+  --cream-600: var(--palette-accent);
+  --cream-400: color-mix(in srgb, var(--palette-accent) 68%, #FFFFFF);
+  --cream-200: color-mix(in srgb, var(--palette-accent) 40%, #FFFFFF);
+  --cream-100: color-mix(in srgb, var(--palette-accent) 24%, var(--palette-surface));
+  --cream-50: var(--palette-surface);
+  --border: color-mix(in srgb, var(--palette-accent) 45%, #FFFFFF);
+  --border-light: color-mix(in srgb, var(--palette-accent) 28%, #FFFFFF);
+}
+
+html[data-theme="lavanda"] {
+  --palette-primary: #806E9C;
+  --palette-accent: #D8C8B9;
+  --palette-surface: #FBF8FC;
+}
+
+html[data-theme="ceu"] {
+  --palette-primary: #5D85AA;
+  --palette-accent: #D6C6B2;
+  --palette-surface: #F9FBFD;
+}
+
+html[data-theme="menta"] {
+  --palette-primary: #4F8C80;
+  --palette-accent: #D0C4A8;
+  --palette-surface: #F6FBF9;
+}
+
+html[data-theme="eucalipto"] {
+  --palette-primary: #54776D;
+  --palette-accent: #CDBAA5;
+  --palette-surface: #F7FAF8;
+}
+
+html[data-theme="oliva"] {
+  --palette-primary: #78804F;
+  --palette-accent: #D1BC8D;
+  --palette-surface: #FBFAF4;
+}
+
+html[data-theme="camomila"] {
+  --palette-primary: #A77E3D;
+  --palette-accent: #D9C49A;
+  --palette-surface: #FFFBEF;
+}
+
+html[data-theme="areia"] {
+  --palette-primary: #8B7765;
+  --palette-accent: #CDBCA9;
+  --palette-surface: #FCFAF7;
+}
+
+html[data-theme="cacau"] {
+  --palette-primary: #8A6654;
+  --palette-accent: #D4BBA5;
+  --palette-surface: #FDF9F5;
+}
+
+html[data-theme="ameixa"] {
+  --palette-primary: #80566F;
+  --palette-accent: #CFB9B7;
+  --palette-surface: #FCF8FA;
+}
+
+html[data-theme="cereja"] {
+  --palette-primary: #9A5967;
+  --palette-accent: #D7B5AD;
+  --palette-surface: #FDF8F8;
+}
+
+html[data-theme="coral"] {
+  --palette-primary: #AD685E;
+  --palette-accent: #DDB9A5;
+  --palette-surface: #FFF9F6;
+}
+
+html[data-theme="azul"] {
+  --palette-primary: #5C729A;
+  --palette-accent: #C9BBAA;
+  --palette-surface: #F8FAFD;
+}
+
+html[data-theme="lilas"] {
+  --palette-primary: #8F719B;
+  --palette-accent: #D6C1B8;
+  --palette-surface: #FCF9FD;
+}
+
+html[data-theme="petroleo"] {
+  --palette-primary: #397681;
+  --palette-accent: #C7B69E;
+  --palette-surface: #F5FAFA;
+}
+
+html[data-theme="esmeralda"] {
+  --palette-primary: #3F7D62;
+  --palette-accent: #CFBE9F;
+  --palette-surface: #F5FAF7;
+}
+
+html[data-theme="aurora"] {
+  --palette-primary: #687BA3;
+  --palette-accent: #D7B9BD;
+  --palette-surface: #FAF9FC;
+}
+
+html[data-theme="outono"] {
+  --palette-primary: #A06546;
+  --palette-accent: #D5B287;
+  --palette-surface: #FFF9F3;
+}
+
+html[data-theme="neblina"] {
+  --palette-primary: #657482;
+  --palette-accent: #C6BCAF;
+  --palette-surface: #F8FAFB;
+}
+
+html[data-theme="baunilha"] {
+  --palette-primary: #A57A4E;
+  --palette-accent: #DFC69B;
+  --palette-surface: #FFFCF4;
+}
+
+html[data-theme="hibisco"] {
+  --palette-primary: #9A5273;
+  --palette-accent: #D8B5B9;
+  --palette-surface: #FDF8FB;
+}
+
+[stroke="#5B7B5E"] {
+  stroke: var(--green-600);
+}
+
+[fill="#5B7B5E"] {
+  fill: var(--green-600);
+}
+
+[stroke="#5B7B5E"],
+[fill="#5B7B5E"] {
+  transition: stroke var(--ease), fill var(--ease);
+}
+
 .nav-palette-item {
   position: relative;
   display: flex;
@@ -124,8 +294,8 @@ html[data-theme="rose"] {
   position: fixed;
   top: 84px;
   left: 16px;
-  width: 360px;
-  max-height: 560px;
+  width: 840px;
+  max-height: 680px;
   padding: 1.25rem;
   background: rgba(255, 255, 255, 0.985);
   border: 1px solid var(--border-light);
@@ -196,6 +366,7 @@ body > .palette-panel {
 
 .palette-grid {
   display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 0.8rem;
 }
 
@@ -205,7 +376,8 @@ body > .palette-panel {
   border: 1px solid var(--border);
   background: var(--white);
   border-radius: 18px;
-  padding: 0.95rem;
+  min-width: 0;
+  padding: 0.85rem;
   cursor: pointer;
   transition: border-color var(--ease), box-shadow var(--ease), transform var(--ease);
 }
@@ -224,7 +396,7 @@ body > .palette-panel {
 .palette-swatches {
   display: flex;
   gap: 0.45rem;
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.6rem;
 }
 
 .palette-swatches span {
@@ -244,9 +416,15 @@ body > .palette-panel {
 
 .palette-note {
   display: block;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   color: var(--text-500);
-  line-height: 1.5;
+  line-height: 1.45;
+}
+
+@media (max-width: 960px) {
+  .palette-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 .palette-panel-footer {
@@ -281,6 +459,10 @@ body > .palette-panel {
 
   .palette-panel-header h2 {
     font-size: 1.8rem;
+  }
+
+  .palette-grid {
+    grid-template-columns: 1fr;
   }
 }
 
