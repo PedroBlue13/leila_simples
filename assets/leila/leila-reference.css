@@ -601,6 +601,259 @@ h3 {
   line-height: 1.6;
 }
 
+/* ── Neurodivergência ── */
+.neurodivergencia {
+  position: relative;
+  background: var(--green-50);
+  overflow: hidden;
+}
+
+.neurodivergencia::after {
+  content: "";
+  position: absolute;
+  top: -180px;
+  right: -140px;
+  width: 430px;
+  height: 430px;
+  border: 1px solid var(--green-100);
+  border-radius: 50%;
+  opacity: 0.7;
+}
+
+.neurodivergencia-grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(280px, 0.8fr) minmax(0, 1.2fr);
+  gap: var(--s16);
+  align-items: center;
+}
+
+.neurodivergencia-visual {
+  position: relative;
+  min-height: 420px;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  overflow: hidden;
+}
+
+.neurodivergencia-visual::before {
+  content: "";
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  z-index: 2;
+  width: 11px;
+  height: 11px;
+  background: #2F6FB0;
+  border-radius: 50%;
+  box-shadow:
+    19px 0 0 #4F9D69,
+    38px 0 0 #F2C94C,
+    57px 0 0 #D95D5D;
+  pointer-events: none;
+}
+
+.neurodivergencia-canvas {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 420px;
+  display: block;
+  opacity: 0;
+  outline: none;
+  touch-action: none;
+  transition: opacity 0.3s ease;
+}
+
+.tea-cube-fallback {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 800px;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.tea-cube {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  transform-style: preserve-3d;
+  animation: tea-cube-spin 12s linear infinite;
+}
+
+.tea-cube-face {
+  --cube-color: #2F6FB0;
+  position: absolute;
+  inset: 0;
+  border: 2px solid rgba(27, 33, 37, 0.82);
+  border-radius: 8px;
+  background-color: var(--cube-color);
+  background-image:
+    linear-gradient(to right,
+      transparent calc(33.333% - 2px),
+      rgba(27, 33, 37, 0.82) calc(33.333% - 2px),
+      rgba(27, 33, 37, 0.82) calc(33.333% + 2px),
+      transparent calc(33.333% + 2px),
+      transparent calc(66.666% - 2px),
+      rgba(27, 33, 37, 0.82) calc(66.666% - 2px),
+      rgba(27, 33, 37, 0.82) calc(66.666% + 2px),
+      transparent calc(66.666% + 2px)),
+    linear-gradient(to bottom,
+      transparent calc(33.333% - 2px),
+      rgba(27, 33, 37, 0.82) calc(33.333% - 2px),
+      rgba(27, 33, 37, 0.82) calc(33.333% + 2px),
+      transparent calc(33.333% + 2px),
+      transparent calc(66.666% - 2px),
+      rgba(27, 33, 37, 0.82) calc(66.666% - 2px),
+      rgba(27, 33, 37, 0.82) calc(66.666% + 2px),
+      transparent calc(66.666% + 2px));
+  box-shadow: inset 0 0 22px rgba(255, 255, 255, 0.14);
+  backface-visibility: visible;
+}
+
+.tea-cube-front {
+  --cube-color: #2F6FB0;
+  transform: translateZ(75px);
+}
+
+.tea-cube-back {
+  --cube-color: #D95D5D;
+  transform: rotateY(180deg) translateZ(75px);
+}
+
+.tea-cube-right {
+  --cube-color: #4F9D69;
+  transform: rotateY(90deg) translateZ(75px);
+}
+
+.tea-cube-left {
+  --cube-color: #F2C94C;
+  transform: rotateY(-90deg) translateZ(75px);
+}
+
+.tea-cube-top {
+  --cube-color: #F2C94C;
+  transform: rotateX(90deg) translateZ(75px);
+}
+
+.tea-cube-bottom {
+  --cube-color: #D95D5D;
+  transform: rotateX(-90deg) translateZ(75px);
+}
+
+@keyframes tea-cube-spin {
+  0% { transform: rotateX(-18deg) rotateY(30deg); }
+  50% { transform: rotateX(18deg) rotateY(210deg); }
+  100% { transform: rotateX(-18deg) rotateY(390deg); }
+}
+
+.neurodivergencia-loading {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: var(--s6);
+  color: var(--text-400);
+  background: transparent;
+  font-size: 0.78rem;
+  text-align: center;
+  pointer-events: none;
+}
+
+.neurodivergencia-visual.is-loading .neurodivergencia-loading {
+  display: flex;
+}
+
+.neurodivergencia-visual.is-loaded .neurodivergencia-canvas {
+  opacity: 1;
+}
+
+.neurodivergencia-visual.is-loaded .tea-cube-fallback {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.neurodivergencia-visual.has-error .neurodivergencia-loading {
+  display: none;
+}
+
+.neurodivergencia-content .tag {
+  margin-bottom: var(--s3);
+}
+
+.neurodivergencia-content h2 {
+  margin-bottom: var(--s5);
+}
+
+.neurodivergencia-intro {
+  margin-bottom: var(--s8);
+  color: var(--text-500);
+  font-size: 0.95rem;
+  line-height: 1.8;
+}
+
+.neurodivergencia-pilares {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s5);
+}
+
+.neurodivergencia-pilar {
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  gap: var(--s4);
+  align-items: flex-start;
+}
+
+.neurodivergencia-pilar > span {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--green-900);
+  background: var(--white);
+  border: 1px solid var(--green-100);
+  border-radius: 50%;
+  font-family: var(--font-serif);
+  font-size: 0.76rem;
+  font-weight: 700;
+}
+
+.neurodivergencia-pilar h3 {
+  margin-bottom: 0.15rem;
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.neurodivergencia-pilar p {
+  color: var(--text-500);
+  font-size: 0.84rem;
+  line-height: 1.65;
+}
+
+.neurodivergencia-note {
+  margin-top: var(--s6);
+  padding: var(--s3) var(--s4);
+  color: var(--text-500);
+  background: rgba(255, 255, 255, 0.58);
+  border-left: 3px solid var(--green-300);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  font-size: 0.76rem;
+  line-height: 1.55;
+}
+
 /* ── Especialidades ── */
 .especialidades {
   background: var(--white);
@@ -1107,6 +1360,22 @@ h3 {
     gap: var(--s10);
   }
 
+  .neurodivergencia-grid {
+    grid-template-columns: 1fr;
+    gap: var(--s10);
+  }
+
+  .neurodivergencia-visual {
+    width: min(100%, 540px);
+    min-height: 380px;
+    margin: 0 auto;
+  }
+
+  .neurodivergencia-content {
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
   .sobre-img {
     max-width: 280px;
     margin: 0 auto;
@@ -1240,6 +1509,36 @@ h3 {
   .sobre-img {
     max-width: 240px;
     margin: 0 auto;
+  }
+
+  .neurodivergencia-visual {
+    min-height: 340px;
+  }
+
+  .neurodivergencia-canvas {
+    height: 340px;
+  }
+
+  .tea-cube {
+    width: 126px;
+    height: 126px;
+  }
+
+  .tea-cube-front { transform: translateZ(63px); }
+  .tea-cube-back { transform: rotateY(180deg) translateZ(63px); }
+  .tea-cube-right { transform: rotateY(90deg) translateZ(63px); }
+  .tea-cube-left { transform: rotateY(-90deg) translateZ(63px); }
+  .tea-cube-top { transform: rotateX(90deg) translateZ(63px); }
+  .tea-cube-bottom { transform: rotateX(-90deg) translateZ(63px); }
+
+  .neurodivergencia-pilar {
+    grid-template-columns: 38px 1fr;
+    gap: var(--s3);
+  }
+
+  .neurodivergencia-pilar > span {
+    width: 38px;
+    height: 38px;
   }
 
   .deco-top-left {
