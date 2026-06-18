@@ -7,16 +7,22 @@
 
   const revealButton = opening.querySelector('[data-opening-reveal]');
   const skipButton = opening.querySelector('[data-opening-skip]');
-  const glassesFrame = opening.querySelector('.leila-opening__glasses-frame');
+  const glassesPoster = opening.querySelector('.leila-opening__glasses-poster');
   const firstMessage = opening.querySelector('.leila-opening__message--first');
-  const togetherMessage = opening.querySelector('.leila-opening__message--together');
+  const glassesMessage = opening.querySelector('.leila-opening__message--glasses');
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const focusableSelector = 'button:not([disabled])';
-  let isRevealing = false;
+  const minimumFirstMessageTime = reducedMotion ? 9200 : 3800;
+  const glassesLoadDelay = reducedMotion ? 0 : 450;
+  const openingStartedAt = performance.now();
+
+  let isLoadingScene = false;
+  let isGlassesVisible = false;
   let isClosing = false;
   let currentLens = null;
   let targetLens = null;
-  let readyRequestTimer = 0;
+  let lensAnimationFrame = 0;
+  let showTimer = 0;
 
   document.body.classList.add('opening-active');
 
@@ -33,8 +39,8 @@
       baseX: offsetX + (478 * scale),
       baseY: offsetY + (469 * scale),
       spacing: 202 * scale,
-      radiusX: 127 * scale,
-      radiusY: 103 * scale,
+      radiusX: 147 * scale,
+      radiusY: 140 * scale,
       limitX: 90 * scale,
       limitY: 60 * scale
     };
@@ -78,15 +84,7 @@
     };
   }
 
-  function renderLens() {
-    if (!currentLens || !targetLens || !document.body.contains(opening)) {
-      return;
-    }
-
-    Object.keys(currentLens).forEach((key) => {
-      currentLens[key] += (targetLens[key] - currentLens[key]) * 0.16;
-    });
-
+  function writeLensStyles() {
     opening.style.setProperty('--lens-left-x', `${currentLens.leftX.toFixed(2)}px`);
     opening.style.setProperty('--lens-right-x', `${currentLens.rightX.toFixed(2)}px`);
     opening.style.setProperty('--lens-center-y', `${currentLens.centerY.toFixed(2)}px`);
@@ -94,40 +92,108 @@
     opening.style.setProperty('--lens-radius-y', `${currentLens.radiusY.toFixed(2)}px`);
     opening.style.setProperty('--glasses-shift-x', `${currentLens.shiftX.toFixed(2)}px`);
     opening.style.setProperty('--glasses-shift-y', `${currentLens.shiftY.toFixed(2)}px`);
-    window.requestAnimationFrame(renderLens);
+  }
+
+  function renderLens() {
+    if (!currentLens || !targetLens || !document.body.contains(opening)) {
+      lensAnimationFrame = 0;
+      return;
+    }
+
+    let largestDifference = 0;
+
+    Object.keys(currentLens).forEach((key) => {
+      const difference = targetLens[key] - currentLens[key];
+      largestDifference = Math.max(largestDifference, Math.abs(difference));
+      currentLens[key] += difference * 0.18;
+    });
+
+    writeLensStyles();
+
+    if (largestDifference > 0.08) {
+      lensAnimationFrame = window.requestAnimationFrame(renderLens);
+    } else {
+      currentLens = { ...targetLens };
+      writeLensStyles();
+      lensAnimationFrame = 0;
+    }
+  }
+
+  function scheduleLensRender() {
+    if (!lensAnimationFrame) {
+      lensAnimationFrame = window.requestAnimationFrame(renderLens);
+    }
+  }
+
+  function updateLens(pointerX, pointerY, sourceWidth, sourceHeight) {
+    if (!isGlassesVisible || isClosing) {
+      return;
+    }
+
+    targetLens = makeLensTarget(pointerX, pointerY, sourceWidth, sourceHeight);
+    scheduleLensRender();
   }
 
   currentLens = makeDefaultLensTarget();
   targetLens = { ...currentLens };
-  renderLens();
+  writeLensStyles();
+
+  function showGlasses() {
+    if (isGlassesVisible || isClosing) {
+      return;
+    }
+
+    isGlassesVisible = true;
+    opening.classList.add('is-glasses-visible');
+
+    if (firstMessage) {
+      firstMessage.setAttribute('aria-hidden', 'true');
+    }
+
+    if (glassesMessage) {
+      glassesMessage.setAttribute('aria-hidden', 'false');
+    }
+
+    if (revealButton) {
+      revealButton.disabled = false;
+    }
+  }
+
+  function queueGlassesReveal() {
+    const elapsed = performance.now() - openingStartedAt;
+    const remainingTime = Math.max(0, minimumFirstMessageTime - elapsed);
+
+    window.clearTimeout(showTimer);
+    showTimer = window.setTimeout(showGlasses, remainingTime);
+  }
 
   function markSceneReady() {
     opening.classList.add('is-scene-ready');
-    window.clearInterval(readyRequestTimer);
+    queueGlassesReveal();
   }
 
-  window.addEventListener('message', (event) => {
-    if (event.data?.type === 'leila-glasses-ready') {
-      markSceneReady();
+  function startGlassesLoad() {
+    if (isLoadingScene || isClosing || !glassesPoster) {
       return;
     }
 
-    if (event.data?.type === 'leila-glasses-pointer') {
-      targetLens = makeLensTarget(
-        event.data.x,
-        event.data.y,
-        event.data.width,
-        event.data.height
-      );
+    isLoadingScene = true;
+    opening.classList.add('is-scene-loading');
+
+    glassesPoster.addEventListener('load', markSceneReady, { once: true });
+    glassesPoster.addEventListener('error', queueGlassesReveal, { once: true });
+
+    if (glassesPoster.dataset.src) {
+      glassesPoster.src = glassesPoster.dataset.src;
     }
-  });
+
+    if (glassesPoster.complete) {
+      markSceneReady();
+    }
+  }
 
   opening.addEventListener('pointermove', (event) => {
-    if (event.target === glassesFrame) {
-      return;
-    }
-
-    targetLens = makeLensTarget(
+    updateLens(
       event.clientX,
       event.clientY,
       window.innerWidth,
@@ -136,74 +202,39 @@
   }, { passive: true });
 
   window.addEventListener('resize', () => {
-    targetLens = makeDefaultLensTarget();
+    currentLens = makeDefaultLensTarget();
+    targetLens = { ...currentLens };
+    writeLensStyles();
   });
 
-  if (glassesFrame) {
-    const requestReady = () => {
-      glassesFrame.contentWindow?.postMessage({
-        type: 'leila-glasses-ready-request'
-      }, '*');
-    };
+  window.setTimeout(startGlassesLoad, glassesLoadDelay);
 
-    glassesFrame.addEventListener('load', () => {
-      if (reducedMotion) {
-        markSceneReady();
-        return;
-      }
-
-      requestReady();
-    }, { once: true });
-
-    requestReady();
-    readyRequestTimer = window.setInterval(requestReady, 450);
-  } else {
-    markSceneReady();
+  function removeOpening() {
+    window.clearTimeout(showTimer);
+    window.cancelAnimationFrame(lensAnimationFrame);
+    opening.remove();
+    document.dispatchEvent(new CustomEvent('leila:openingcomplete'));
   }
 
-  function finishOpening(delay) {
-    window.setTimeout(() => {
-      if (isClosing) {
-        return;
-      }
-
-      isClosing = true;
-      window.clearInterval(readyRequestTimer);
-      opening.classList.add('is-leaving');
-      document.body.classList.remove('opening-active', 'opening-clearing');
-
-      window.setTimeout(() => {
-        opening.remove();
-      }, reducedMotion ? 20 : 820);
-    }, delay);
-  }
-
-  function revealTogether() {
-    if (isRevealing) {
+  function revealSite() {
+    if (isClosing || !isGlassesVisible) {
       return;
     }
 
-    isRevealing = true;
+    isClosing = true;
     opening.classList.add('is-revealing');
+    document.body.classList.add('opening-clearing');
 
     if (revealButton) {
       revealButton.disabled = true;
     }
 
     window.setTimeout(() => {
-      opening.classList.add('is-together');
-      document.body.classList.add('opening-clearing');
+      opening.classList.add('is-leaving');
+      document.body.classList.remove('opening-active', 'opening-clearing');
+    }, reducedMotion ? 20 : 780);
 
-      if (firstMessage) {
-        firstMessage.setAttribute('aria-hidden', 'true');
-      }
-
-      if (togetherMessage) {
-        togetherMessage.setAttribute('aria-hidden', 'false');
-      }
-    }, reducedMotion ? 10 : 420);
-
-    finishOpening(reducedMotion ? 1400 : 3900);
+    window.setTimeout(removeOpening, reducedMotion ? 40 : 1500);
   }
 
   function skipOpening() {
@@ -212,13 +243,9 @@
     }
 
     isClosing = true;
-    window.clearInterval(readyRequestTimer);
     opening.classList.add('is-leaving');
     document.body.classList.remove('opening-active', 'opening-clearing');
-
-    window.setTimeout(() => {
-      opening.remove();
-    }, reducedMotion ? 20 : 820);
+    window.setTimeout(removeOpening, reducedMotion ? 20 : 820);
   }
 
   function trapFocus(event) {
@@ -251,19 +278,7 @@
     }
   }
 
-  if (revealButton) {
-    revealButton.addEventListener('click', revealTogether);
-  }
-
-  if (skipButton) {
-    skipButton.addEventListener('click', skipOpening);
-  }
-
+  revealButton?.addEventListener('click', revealSite);
+  skipButton?.addEventListener('click', skipOpening);
   opening.addEventListener('keydown', trapFocus);
-
-  window.requestAnimationFrame(() => {
-    if (revealButton) {
-      revealButton.focus({ preventScroll: true });
-    }
-  });
 }());

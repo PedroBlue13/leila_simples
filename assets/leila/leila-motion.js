@@ -204,6 +204,7 @@
     let height = 0;
     let dpr = 1;
     let animationFrame = 0;
+    let lastFrameTime = 0;
     let lastScrollY = window.scrollY;
     let scrollVelocity = 0;
     let particles = [];
@@ -241,7 +242,7 @@
 
     function buildParticles() {
       refreshPalette();
-      const total = width < 640 ? 16 : width < 1024 ? 22 : 30;
+      const total = width < 640 ? 12 : width < 1024 ? 18 : 24;
       particles = Array.from({ length: total }, () => ({
         x: Math.random() * width,
         y: Math.random() * height,
@@ -278,7 +279,13 @@
       context.stroke();
     }
 
-    function tick() {
+    function tick(timestamp = 0) {
+      if (timestamp - lastFrameTime < 32) {
+        animationFrame = window.requestAnimationFrame(tick);
+        return;
+      }
+
+      lastFrameTime = timestamp;
       context.clearRect(0, 0, width, height);
 
       particles.forEach((particle, index) => {
@@ -330,8 +337,50 @@
     });
   }
 
-  initReveal();
-  initAnimeLoops();
-  initParallax();
-  initParticles();
+  function initCubeInteraction() {
+    const host = document.querySelector('[data-spline-tea-cube]');
+    const cube = host?.querySelector('.tea-cube');
+
+    if (!host || !cube || reducedMotion) {
+      return;
+    }
+
+    const updateCube = (event) => {
+      const rect = host.getBoundingClientRect();
+      const x = ((event.clientX - rect.left) / Math.max(rect.width, 1)) - 0.5;
+      const y = ((event.clientY - rect.top) / Math.max(rect.height, 1)) - 0.5;
+
+      cube.style.setProperty('--cube-pointer-x', `${(-y * 16).toFixed(2)}deg`);
+      cube.style.setProperty('--cube-pointer-y', `${(x * 22).toFixed(2)}deg`);
+    };
+
+    const resetCube = () => {
+      cube.style.setProperty('--cube-pointer-x', '0deg');
+      cube.style.setProperty('--cube-pointer-y', '0deg');
+    };
+
+    host.addEventListener('pointermove', updateCube, { passive: true });
+    host.addEventListener('pointerleave', resetCube, { passive: true });
+  }
+
+  let hasStarted = false;
+
+  function startMotion() {
+    if (hasStarted) {
+      return;
+    }
+
+    hasStarted = true;
+    initReveal();
+    initAnimeLoops();
+    initParallax();
+    initParticles();
+    initCubeInteraction();
+  }
+
+  if (document.getElementById('leila-opening')) {
+    document.addEventListener('leila:openingcomplete', startMotion, { once: true });
+  } else {
+    startMotion();
+  }
 }());

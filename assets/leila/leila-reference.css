@@ -681,11 +681,15 @@ h3 {
 }
 
 .tea-cube {
+  --cube-pointer-x: 0deg;
+  --cube-pointer-y: 0deg;
   position: relative;
   width: 150px;
   height: 150px;
   transform-style: preserve-3d;
   animation: tea-cube-spin 12s linear infinite;
+  transition: filter 0.25s ease;
+  will-change: transform;
 }
 
 .tea-cube-face {
@@ -749,9 +753,21 @@ h3 {
 }
 
 @keyframes tea-cube-spin {
-  0% { transform: rotateX(-18deg) rotateY(30deg); }
-  50% { transform: rotateX(18deg) rotateY(210deg); }
-  100% { transform: rotateX(-18deg) rotateY(390deg); }
+  0% {
+    transform:
+      rotateX(calc(-18deg + var(--cube-pointer-x)))
+      rotateY(calc(30deg + var(--cube-pointer-y)));
+  }
+  50% {
+    transform:
+      rotateX(calc(18deg + var(--cube-pointer-x)))
+      rotateY(calc(210deg + var(--cube-pointer-y)));
+  }
+  100% {
+    transform:
+      rotateX(calc(-18deg + var(--cube-pointer-x)))
+      rotateY(calc(390deg + var(--cube-pointer-y)));
+  }
 }
 
 .neurodivergencia-loading {

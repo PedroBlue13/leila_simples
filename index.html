@@ -100,19 +100,11 @@
     <div class="leila-opening__glasses" aria-hidden="true">
       <img
         class="leila-opening__glasses-poster"
-        src="assets/leila/glasses-3d-poster.png"
+        data-src="assets/leila/glasses-3d-poster.png"
         alt=""
         width="1304"
         height="902"
       >
-      <iframe
-        class="leila-opening__glasses-frame"
-        title="Óculos 3D interativos que acompanham o movimento do cursor"
-        src="assets/leila/glasses-3d/index.html"
-        tabindex="-1"
-        allow="autoplay"
-        aria-hidden="true"
-      ></iframe>
     </div>
 
     <button class="leila-opening__skip" type="button" data-opening-skip aria-label="Pular introdução e acessar o site">
@@ -124,15 +116,15 @@
       <div class="leila-opening__message leila-opening__message--first">
         <p class="leila-opening__eyebrow">Para mães, pais e responsáveis</p>
         <h1 id="leila-opening-title">Quando tentamos compreender tudo sozinhos, o caminho pode parecer confuso.</h1>
-        <button class="leila-opening__enter" type="button" data-opening-reveal>
-          <span>Conhecer quem pode caminhar conosco</span>
+      </div>
+      <div class="leila-opening__message leila-opening__message--glasses" aria-hidden="true">
+        <p class="leila-opening__eyebrow">Quando encontramos apoio</p>
+        <p class="leila-opening__glasses-text">Buscar ajuda é como colocar novos óculos: o caminho fica mais nítido e cada criança pode ser compreendida com mais cuidado.</p>
+        <button class="leila-opening__enter" type="button" data-opening-reveal disabled>
+          <span>Conhecer a Leila</span>
           <span aria-hidden="true">→</span>
         </button>
       </div>
-      <!-- <div class="leila-opening__message leila-opening__message--together" aria-hidden="true">
-        <p class="leila-opening__eyebrow">Com acolhimento e orientação</p>
-        <p class="leila-opening__together-text">Juntos, podemos tornar o caminho mais claro e valorizar o jeito único de cada criança perceber, aprender e se comunicar.</p>
-      </div> -->
     </div>
   </section>
 
@@ -261,7 +253,7 @@
       </div>
       <div class="hero-img">
         <div class="hero-img-wrapper">
-          <img class="hero-photo-custom" src="assets/leila/hero-leila.png" alt="Atendimento neuropsicopedagógico infantil com Leila Biazus" width="380" height="507">
+          <img class="hero-photo-custom" src="assets/leila/hero-leila.webp" alt="Atendimento neuropsicopedagógico infantil com Leila Biazus" width="380" height="507" decoding="async">
           <div class="deco-circle deco-hero-top-right"></div>
           <div class="deco-circle deco-hero-bottom-left"></div>
         </div>
@@ -364,7 +356,7 @@
       <div class="sobre-grid">
         <div class="sobre-img">
           <div class="sobre-img-composition">
-            <img class="sobre-photo-custom" src="assets/leila/hero-leila.png" alt="Leila Biazus neuropsicopedagoga em atendimento infantil acolhedor">
+            <img class="sobre-photo-custom" src="assets/leila/hero-leila.webp" alt="Leila Biazus neuropsicopedagoga em atendimento infantil acolhedor" loading="lazy" decoding="async">
             <div class="deco-circle deco-top-left"></div>
             <div class="deco-circle deco-bottom-right"></div>
           </div>
@@ -631,13 +623,5 @@
   <script src="assets/leila/leila-motion.js"></script>
   <script src="assets/leila/leila-themes.js"></script>
   <script src="assets/leila/leila-opening.js"></script>
-  <script>
-    if (window.location.protocol !== 'file:') {
-      var splineCubeScript = document.createElement('script');
-      splineCubeScript.type = 'module';
-      splineCubeScript.src = 'assets/leila/leila-spline-cube.js';
-      document.body.appendChild(splineCubeScript);
-    }
-  </script>
 </body>
 </html>
