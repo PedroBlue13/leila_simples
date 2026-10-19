@@ -39,7 +39,7 @@ jobs:
           port: ${{ secrets.PORT }}
           protocol: ftp
           local-dir: ./dist/
-          server-dir: /home/leilabiasuz1/
+          server-dir: ./public_html/
           exclude: |
             **/.git*
             **/.git*/**
