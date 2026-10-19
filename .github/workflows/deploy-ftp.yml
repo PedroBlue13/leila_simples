@@ -24,6 +24,12 @@ jobs:
         with:
           persist-credentials: false
 
+      - name: Preparar pasta dist
+        run: |
+          mkdir -p dist
+          cp index.html Leila.html compartilhar.zip dist/
+          cp -R assets compartilhar dist/
+
       - name: Enviar arquivos via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.4.0
         with:
@@ -32,7 +38,7 @@ jobs:
           password: ${{ secrets.PASS }}
           port: ${{ secrets.PORT }}
           protocol: ftp
-          local-dir: ./
+          local-dir: ./dist/
           server-dir: /home/leilabiasuz1/
           exclude: |
             **/.git*
