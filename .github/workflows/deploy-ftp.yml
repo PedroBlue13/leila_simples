@@ -1,0 +1,44 @@
+name: Deploy via FTP
+
+on:
+  push:
+    branches:
+      - prod
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-ftp-prod
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Publicar site
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Baixar arquivos do repositorio
+        uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - name: Enviar arquivos via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.4.0
+        with:
+          server: ${{ secrets.HOST }}
+          username: ${{ secrets.USER }}
+          password: ${{ secrets.PASS }}
+          port: ${{ secrets.PORT }}
+          protocol: ftp
+          local-dir: ./
+          server-dir: /home/leilabiasuz1/
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
+            **/.env
+            **/.env.*
+            tmp/**
+            **/__pycache__/**
